@@ -1,6 +1,6 @@
 # README
 
-Skeleton for analysis of air quality data in the San Francisco Bay Area (SFBA), pre- and post- "COVID-19".
+This repository is a skeleton for analysis of air quality data in the San Francisco Bay Area (SFBA), pre- and post- "COVID-19". Please read the sections below before running the code. If you have questions, please contact David Holstius <dholstius@baaqmd.gov>. Thank you!
 
 ## TODO
 
@@ -48,8 +48,3 @@ The approximate size of `./cache/` will be **~400 Mb for 1h data from Jan 01 thr
 `03-model-1h-PM25.R` is a rough start
 - simple linear model with fixed effect by `AQSID` (i.e., montoring site ID)
 - simple mixed-effects model using `lme4`
-
-## Contact information
-
-- David Holstius <dholstius@baaqmd.gov>
-
