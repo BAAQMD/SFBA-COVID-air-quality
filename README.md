@@ -48,3 +48,4 @@ The approximate size of `./cache/` will be **~400 Mb for 1h data from Jan 01 thr
 `03-model-1h-PM25.R` is a rough start
 - simple linear model with fixed effect by `AQSID` (i.e., montoring site ID)
 - simple mixed-effects model using `lme4`
+- see **TODO** (above) for some ideas for next steps
