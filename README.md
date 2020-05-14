@@ -1,4 +1,4 @@
-# SFBA-COVID-air-quality
+# README
 
 Skeleton for analysis of air quality data in the San Francisco Bay Area (SFBA), pre- and post- "COVID-19".
 
