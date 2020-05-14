@@ -31,7 +31,7 @@ This repository is a skeleton for analysis of air quality data in the San Franci
 `01-harvest-1h.R` pulls hourly data 
 - *for the entire United States* 
 - from [AirNowTech.org](http://airnowtech.org)
-- using the [`cacher`](https://github.com/BAAQMD/cacher) package
+- using the [`BAAQMD/cacher`](https://github.com/BAAQMD/cacher) package
     - to cache the results locally
     - backed by the high-performance [`.fst`](http://www.fstpackage.org) format for tabular data
 
