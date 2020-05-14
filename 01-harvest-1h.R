@@ -68,7 +68,7 @@ get_1h_data <- function (dttm, ...) {
 #'
 #' Sites in the Bay Area.
 #'
-valid_SFBA_site_set <- local({
+SFBA_site_set <- local({
   
   SFBA_COUNTY_FIPS_CODES <- c(
     Alameda = "001", `Contra Costa` = "013", Marin = "041", 
@@ -77,13 +77,6 @@ valid_SFBA_site_set <- local({
   
   sample_data <-
     get_1h_data__(Sys.time() - ddays(1)) 
-  
-  site_blacklist <- 
-    "Rio Vista"
-  
-  warning(
-    "Excluding data from: ", 
-    str_c(site_blacklist, sep = ", "))
   
   SFBA_site_set <-
     sample_data %>%
@@ -134,6 +127,45 @@ parse_dttm <- function (date, time, ...) {
   return(parsed_dttm)
 }
 
+exclude_1h_data <- function (
+  input_data,
+  blacklist
+) {
+  
+  warning(
+    "Excluding data from `blacklist`")
+  
+  blacklist_set <-
+    mutate(
+      blacklist,
+      dttm = map2(
+        .f = seq,
+        .x = dttm_from,
+        .y = dttm_to,
+        by = dhours(1))) %>%
+    select(
+      -dttm_from,
+      -dttm_to) %>%
+    unnest_longer(
+      col = c(dttm = dttm))
+  
+  anti_join(
+    input_data,
+    blacklist_set,
+    by = names(blacklist_set))
+  
+}
+
+SFBA_1h_blacklist <-
+  tibble::tribble(
+    ~ SiteName, ~ dttm_from, ~ dttm_to,
+    "Rio Vista",
+      dttm_start, 
+      dttm_end,
+    "Vacaville",
+      ISOdate(2020, 02, 26, hour = 0, tz = dttm_tz), 
+      ISOdate(2020, 03, 15, hour = 23, tz = dttm_tz))
+
 tictoc::tic() # start timing
 
 #'
@@ -154,6 +186,8 @@ SFBA_1h_data <-
       tz = dttm_tz)) %>%
   filter(
     Status == "Active") %>%
+  exclude_1h_data(
+    SFBA_1h_blacklist) %>%
   select(
     dttm,
     everything(),
