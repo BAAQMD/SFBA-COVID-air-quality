@@ -25,7 +25,8 @@ Skeleton for analysis of air quality data in the San Francisco Bay Area (SFBA), 
 - loads libraries
 - defines a function `with_epoch()`
     - labels data with "Pre" and "Post" in a new `epoch` column
-    - "Pre" and "Post" are separated by a "transition" interval --- most plausible effects would not be instantaneous
+    - **most plausible effects would not be instantaneous**, so "Pre" and "Post" are separated by a "transition" interval
+    - accepts your definition of `transition_start` and `transition_end`
 
 `01-harvest-1h.R` pulls hourly data 
 - *for the entire United States* 
