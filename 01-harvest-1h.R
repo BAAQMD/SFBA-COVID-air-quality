@@ -187,7 +187,7 @@ SFBA_1h_data <-
   filter(
     Status == "Active") %>%
   exclude_1h_data(
-    SFBA_1h_blacklist) %>%
+    blacklist = SFBA_1h_blacklist) %>%
   select(
     dttm,
     everything(),

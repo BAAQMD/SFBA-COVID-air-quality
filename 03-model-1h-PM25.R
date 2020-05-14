@@ -2,11 +2,15 @@ model_1h_data <-
   SFBA_1h_data %>%
   with_epoch(
     na.rm = TRUE) %>%
+  exclude_1h_data(
+    blacklist = SFBA_1h_blacklist) %>%
   mutate(
     elapsed = dttm - first(dttm))
 
 PM25_linear_model <-
-  lm(PM25 ~ AQSID + epoch + elapsed, data = model_1h_data)
+  stats::lm(
+    PM25 ~ AQSID + epoch + elapsed, 
+    data = model_1h_data)
 
 summary(PM25_linear_model)
 
