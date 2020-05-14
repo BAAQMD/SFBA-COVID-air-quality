@@ -39,7 +39,7 @@ The approximate size of `./cache/` will be **~400 Mb for 1h data from Jan 01 thr
 
 ## Exploratory Work
 
-`02-chart-1h-PM25.R` is a quick peek
+`02-chart-1h-PM25.R` generates a quick stripchart of PM2.5, faceted by site
 - shows most of the data
     - Y-axis is (visually) clipped at -5 and 35 µg/m^3
     - no datapoints are actually dropped, so the (displayed) group means are accurate
