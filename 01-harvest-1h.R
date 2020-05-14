@@ -68,7 +68,7 @@ get_1h_data <- function (dttm, ...) {
 #'
 #' Sites in the Bay Area.
 #'
-SFBA_site_set <- local({
+valid_SFBA_site_set <- local({
   
   SFBA_COUNTY_FIPS_CODES <- c(
     Alameda = "001", `Contra Costa` = "013", Marin = "041", 
@@ -78,10 +78,19 @@ SFBA_site_set <- local({
   sample_data <-
     get_1h_data__(Sys.time() - ddays(1)) 
   
+  sites_to_drop <- 
+    "Rio Vista"
+  
+  warning(
+    "Dropping data for: ", 
+    str_c(sites_to_drop, sep = ", "))
+  
   SFBA_site_set <-
     sample_data %>%
     filter(
       str_sub(AQSID, 1, 5) %in% str_c("06", SFBA_COUNTY_FIPS_CODES)) %>%
+    filter(
+      !(SiteName %in% sites_to_drop)) %>%
     distinct(
       SiteName, 
       AQSID) %>%
@@ -102,7 +111,7 @@ get_1h_SFBA_data <- function (
   filtered_data <-
     filter(
       get_1h_data(dttm),
-      AQSID %in% SFBA_site_set)
+      AQSID %in% valid_SFBA_site_set)
   
   return(filtered_data)
   
@@ -156,3 +165,4 @@ tictoc::toc() # stop timing; print elapsed time
 
 show(format(object.size(SFBA_1h_data), units = "Mb"))
 glimpse(SFBA_1h_data)
+
