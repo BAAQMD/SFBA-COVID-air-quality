@@ -21,31 +21,32 @@ This repository is a skeleton for analysis of air quality data in the San Franci
     
 ## Setup and Data
 
-`00-setup.R` should be run first
+`00-setup.R` should be run first. It:
 - loads the requisite libraries
 - defines a function `with_epoch()`
     - labels data with "Pre" and "Post" in a new `epoch` column
     - **most plausible effects would not be instantaneous**, so "Pre" and "Post" are separated by a "transition" interval
     - accepts your definition of `transition_start` and `transition_end`
 
-`01-harvest-1h.R` pulls hourly data 
+`01-harvest-1h.R` pulls hourly data:
 - *for the entire United States* 
 - from [AirNowTech.org](http://airnowtech.org)
 - using the [`BAAQMD/cacher`](https://github.com/BAAQMD/cacher) package
     - to cache the results locally
     - backed by the high-performance [`.fst`](http://www.fstpackage.org) format for tabular data
 
-The approximate size of `./cache/` will be **~400 Mb for 1h data from Jan 01 through May 13, 2000**.
+After running `01-harvest-1h.R`, the approximate size of `./cache/` will be **~400 Mb for 1h data from Jan 01 through May 13, 2000**.
 
 ## Exploratory Work
 
-`02-chart-1h-PM25.R` generates a quick stripchart of PM2.5, faceted by site
+`02-chart-1h-PM25.R` generates a quick stripchart of PM2.5, faceted by site. This chart:
 - shows most of the data
     - Y-axis is (visually) clipped at -5 and 35 µg/m^3
     - no datapoints are actually dropped, so the (displayed) group means are accurate
 - shows means for both "Pre" and "Post"
 
-`03-model-1h-PM25.R` is a rough start
+`03-model-1h-PM25.R` is a rough start. These models have been fit:
 - simple linear model with fixed effect by `AQSID` (i.e., montoring site ID)
 - simple mixed-effects model using `lme4`
-- see **TODO** (above) for some ideas for next steps
+
+See **TODO** (above) for some ideas for next steps.
