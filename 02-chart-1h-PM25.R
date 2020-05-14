@@ -33,6 +33,14 @@ tidy_1h_data <- function (
   
 }
 
+#'
+#' TODO: Expand `value_vars` beyond just "PM25".
+#' 
+chart_vars <- 
+  tidyselect::vars_select(
+    names(SFBA_1h_data),
+    PM25)
+
 chart_data <-
   SFBA_1h_data %>%
   tidy_1h_data(
@@ -41,22 +49,19 @@ chart_data <-
   with_epoch(
     na.rm = TRUE)
 
+y_limits <- c(
+  5 * floor(min(0, with(chart_data, min(value, na.rm = TRUE))) / 5),
+  35)
+
 chart_description <- 
   ggplot2::labs(
-    title = "Bay Area Hourly Monitoring Data",
-    subtitle = "Source: AirNowTech.org",
+    title = "Bay Area Monitoring Data (PM2.5, Hourly)",
+    subtitle = glue(
+      "Source: AirNowTech.",
+      "Points jittered to reduce overplotting.",
+      "Y-axis clipped at {max(y_limits)}, but no data are dropped when calculating group means.",
+      .sep = "\n"),
     caption = glue("DRAFT {format(Sys.Date(), '%Y-%m-%d')}"))
-
-#'
-#' TODO: Expand `value_vars` beyond just "PM2.5".
-#' 
-chart_vars <- 
-  tidyselect::vars_select(
-    names(SFBA_1h_data),
-    PM25)
-
-min_y_value <-
-  5 * floor(min(0, with(chart_data, min(value, na.rm = TRUE))) / 5)
 
 chart_x_scale <-
   scale_x_datetime(
@@ -71,8 +76,7 @@ chart_x_scale <-
 chart_y_scale <-
   scale_y_continuous(
     name = NULL,
-    expand = expansion(mult = 0, add = c(0, abs(min_y_value))),
-    limits = c(min_y_value, 50))
+    expand = expansion(mult = 0, add = c(0, abs(min(y_limits)))))
 
 chart_faceting <-
   facet_wrap(
@@ -115,6 +119,9 @@ chart_object <-
     method = "lm",
     se = FALSE,
     show.legend = FALSE,
-    formula = y ~ x + 0)
+    formula = y ~ x + 0) +
+  coord_cartesian(
+    ylim = y_limits,
+    clip = FALSE) # don't actually drop any data, as `limits` would do
 
 show(chart_object)
