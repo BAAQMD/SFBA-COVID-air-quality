@@ -22,7 +22,7 @@ Skeleton for analysis of air quality data in the San Francisco Bay Area (SFBA), 
 ## Setup and Data
 
 `00-setup.R` should be run first
-- loads libraries
+- loads the requisite libraries
 - defines a function `with_epoch()`
     - labels data with "Pre" and "Post" in a new `epoch` column
     - **most plausible effects would not be instantaneous**, so "Pre" and "Post" are separated by a "transition" interval
