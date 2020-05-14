@@ -32,16 +32,16 @@ plan(multisession(workers = 12))
 #'
 with_epoch <- function (
   input_data,
-  epoch_start = ISOdate(2020, 03, 09, hour = 00, tz = dttm_tz),
-  epoch_end = ISOdate(2020, 03, 23, hour = 00, tz = dttm_tz),
+  transition_start = ISOdate(2020, 03, 09, hour = 00, tz = dttm_tz),
+  transition_end = ISOdate(2020, 03, 23, hour = 00, tz = dttm_tz),
   epoch_levels = c("Pre", NA, "Post"),
   na.rm = TRUE
 ) {
   
   epoch_breaks <- c(
     dttm_start, 
-    epoch_start,  # start of transition interval
-    epoch_end,    # end of transition interval
+    transition_start,  # start of transition interval
+    transition_end,    # end of transition interval
     dttm_end)
   
   cut_epoch <- function (dttm) {
