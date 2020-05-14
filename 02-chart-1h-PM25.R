@@ -76,13 +76,14 @@ chart_x_scale <-
 chart_y_scale <-
   scale_y_continuous(
     name = NULL,
-    expand = expansion(mult = 0, add = c(0, abs(min(y_limits)))))
+    expand = expansion(mult = 0, add = 0))
 
 chart_faceting <-
-  facet_wrap(
+  lemon::facet_rep_wrap(
     ~ SiteName, 
-    #scales = "free_y", 
-    ncol = 4)
+    #scales = "free_y",
+    repeat.tick.labels = "y",
+    ncol = 3)
 
 chart_guides <-
   guides(
@@ -93,18 +94,22 @@ chart_guides <-
 chart_theme <-
   theme_minimal() +
   theme(
-    plot.title = element_text(face = "bold"),
-    strip.text = element_text(hjust = 0),
-    axis.text.y = element_text(vjust = 0))
+    axis.title.x = element_text(size = rel(0.9), margin = margin(1.5, 0, 0, 0, "lines")),
+    strip.text = element_text(size = rel(0.9), hjust = 0, face = "bold"),
+    panel.spacing.x = unit(2, "lines"),
+    #axis.text.y = element_text(vjust = 0),
+    plot.title = element_text(face = "bold"))
 
 chart_object <-
   ggplot(chart_data) +
   aes(x = dttm, y = value, group = SiteName) +
   aes(color = epoch) +
   geom_hline(
+    size = I(0.5),
     yintercept = 0) +
   geom_point(
     position = position_jitter(height = 0.5),
+    show.legend = FALSE,
     size = I(0.3),
     alpha = I(0.2)) +
   scale_color_excel_new() +
@@ -118,6 +123,7 @@ chart_object <-
     aes(group = str_c(epoch, SiteName)),
     method = "lm",
     se = FALSE,
+    size = I(0.75),
     show.legend = FALSE,
     formula = y ~ x + 0) +
   coord_cartesian(
