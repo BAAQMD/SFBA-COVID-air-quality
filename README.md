@@ -19,10 +19,6 @@ Skeleton for analysis of air quality data in the San Francisco Bay Area (SFBA), 
     - between different pollutants measured at the same site
     - between sites (e.g. using [`spatstat`](https://cran.r-project.org/web/packages/spatstat/index.html))
     
-## Contact information
-
-- David Holstius <dholstius@baaqmd.gov>
-
 ## Setup and Data
 
 `00-setup.R` should be run first
@@ -49,4 +45,8 @@ The approximate size of `./cache/` will be **~400 Mb for 1h data from Jan 01 thr
 `03-model-1h-PM25.R` is a rough start
 - simple linear model with fixed effect by `AQSID` (i.e., montoring site ID)
 - simple mixed-effects model using `lme4`
+
+## Contact information
+
+- David Holstius <dholstius@baaqmd.gov>
 
