@@ -78,19 +78,19 @@ valid_SFBA_site_set <- local({
   sample_data <-
     get_1h_data__(Sys.time() - ddays(1)) 
   
-  sites_to_drop <- 
+  site_blacklist <- 
     "Rio Vista"
   
   warning(
-    "Dropping data for: ", 
-    str_c(sites_to_drop, sep = ", "))
+    "Excluding data from: ", 
+    str_c(site_blacklist, sep = ", "))
   
   SFBA_site_set <-
     sample_data %>%
     filter(
       str_sub(AQSID, 1, 5) %in% str_c("06", SFBA_COUNTY_FIPS_CODES)) %>%
     filter(
-      !(SiteName %in% sites_to_drop)) %>%
+      !(SiteName %in% site_blacklist)) %>%
     distinct(
       SiteName, 
       AQSID) %>%
