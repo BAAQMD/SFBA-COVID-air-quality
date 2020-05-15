@@ -14,8 +14,8 @@ This repository is a skeleton for exploratory analyses of air quality data in th
     - look at [`fable`](https://cran.r-project.org/web/packages/fable/index.html) package 
     - look at [`prophet`](https://cran.r-project.org/web/packages/prophet/index.html) package
 
-- exploit / account for correlation:
-    - within each (site, pollutant) series (i.e., temporal autocorrelation)
+- exploit / account for covariance:
+    - within each (site, pollutant) series (e.g. temporal autocorrelation)
     - between different pollutants measured at the same site
     - between sites (e.g. using [`spatstat`](https://cran.r-project.org/web/packages/spatstat/index.html))
     
