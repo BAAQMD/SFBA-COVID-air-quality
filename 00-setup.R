@@ -1,13 +1,23 @@
 library(tidyverse)
-library(ggthemes)
-library(lemon)
 library(lubridate)
 library(glue)
 library(furrr)
-library(httr)
 library(cacher) # devtools::install_github("BAAQMD/cacher)
-library(tictoc)
 library(lme4)
+
+#'
+#' These don't need to be attached; we'll just use `pkg::foo` instead.
+#' 
+imported_packages <- c(
+  "ggthemes",
+  "httr",
+  "lemon",
+  "tictoc",
+  "here")
+
+for (pkg in imported_packages) {
+  requireNamespace(pkg)
+}
 
 #' 
 #' To speed things up, we are going to both:
