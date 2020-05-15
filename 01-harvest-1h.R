@@ -39,14 +39,38 @@ airnowtech_1h_col_spec <-
 #' FIXME: Should `url_tz` be "UTC"? What is AirNow's convention? There's a GMT
 #' offset supplied in the file contents, but what about the filename?
 #' 
-get_1h_data__ <- function (dttm, url_tz = "UTC", col_types = airnowtech_1h_col_spec) {
-  url_dttm <- lubridate::with_tz(dttm, tz = url_tz) # convert `dttm` to UTC
-  url <- airnowtech_url_for_1h_data(url_dttm)
+get_1h_data__ <- function (
+  dttm, 
+  state = "CA",
+  url_tz = "UTC", 
+  col_types = airnowtech_1h_col_spec
+) {
+  
+  url_dttm <- 
+    lubridate::with_tz(
+      dttm, 
+      tz = url_tz) 
+  
+  url <- 
+    airnowtech_url_for_1h_data(
+      url_dttm)
+  
   response <- httr::GET(url)
   httr::stop_for_status(response)
-  unparsed_content <- httr::content(response, as = "text", encoding = "UTF-8")
-  parsed_data <- readr::read_csv(unparsed_content, col_types = col_types)
+  
+  unparsed_content <- 
+    httr::content(
+      response, 
+      as = "text", 
+      encoding = "UTF-8")
+  
+  parsed_data <- 
+    readr::read_csv(
+      unparsed_content, 
+      col_types = col_types)
+  
   return(parsed_data)
+  
 }
 
 #'
