@@ -17,7 +17,9 @@ library(lme4)
 #' 
 #' This multisession plan is the `furrr` part.
 #' 
-plan(multisession(workers = 12))
+future::plan(
+  future::multisession(
+    workers = 12))
 
 #'
 #' To label `input_data` with a new column `epoch`, based on
