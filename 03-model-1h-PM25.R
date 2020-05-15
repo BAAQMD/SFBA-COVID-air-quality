@@ -2,6 +2,8 @@ model_1h_data <-
   SFBA_1h_data %>%
   with_epoch(
     na.rm = TRUE) %>%
+  filter(
+    Status == "Active") %>%
   exclude_1h_data(
     blacklist = SFBA_1h_blacklist) %>%
   mutate(
