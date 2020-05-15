@@ -9,8 +9,8 @@ source(here::here("code", "exclude_1h_data.R"))
 #' What timespan are we interested in?
 #' 
 dttm_tz <- "Etc/GMT+8" 
-dttm_start <- ISOdate(2019, 01, 01, hour = 00, tz = dttm_tz)
-dttm_end <- ISOdate(2020, 05, 12, hour = 23, tz = dttm_tz)
+dttm_start <- ISOdate(2020, 01, 01, hour = 00, tz = dttm_tz)
+dttm_end <- ISOdate(2020, 05, 13, hour = 23, tz = dttm_tz)
 dttm_set <- seq(from = dttm_end, to = dttm_start, by = dhours(-1))
 
 #'
@@ -37,7 +37,10 @@ tictoc::tic() # start timing
 SFBA_1h_data <-
   furrr::future_map_dfr(
     .x = dttm_set,
-    .f = get_1h_SFBA_data, # use the cached variant (see above)
+    .f = possibly(
+      get_1h_SFBA_data, # use the cached variant (see above)
+      otherwise = NULL,
+      quiet = FALSE),
     .progress = TRUE) %>%
   mutate(
     dttm = parse_date_time(
