@@ -41,9 +41,11 @@ make_ecdf_chart <- function (
     aes(x = value) +
     geom_step(
       aes(color = epoch),
+      show.legend = FALSE,
       stat = "ecdf") +
     chart_color_scale +
     chart_faceting +
+    chart_guides +
     chart_x_scale +
     chart_y_scale +
     chart_theme +
@@ -155,9 +157,15 @@ SFBA_1h_PM25_ecdf_chart_v2 <-
   SFBA_1h_PM25_ecdf_chart +
   geom_text(
     aes(label = str_c("D = ", format_decimal(D, digits = 2)), x = 35, y = 0),
-    vjust = 0,
+    vjust = -0.1,
     hjust = 1,
-    size = I(3.25),
+    size = I(3.5),
     data = PM25_summary_data)
 
 show(SFBA_1h_PM25_ecdf_chart_v2)
+
+ggplot2::ggsave(
+  here::here("figures", "SFBA-PM25-1h-ecdf-chart.pdf"),
+  SFBA_1h_PM25_ecdf_chart_v2,
+  width = 8.5,
+  height = 11)

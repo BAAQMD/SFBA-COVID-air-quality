@@ -144,5 +144,5 @@ show(SFBA_PM25_1h_stripchart)
 ggplot2::ggsave(
   here::here("figures", "SFBA-PM25-1h-stripchart.pdf"),
   SFBA_PM25_1h_stripchart,
-  width = 11,
-  height = 17)
+  width = 11 - 2,
+  height = 17 - 2)
