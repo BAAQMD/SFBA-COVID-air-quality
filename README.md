@@ -23,13 +23,14 @@ This repository is a skeleton for exploratory analyses of air quality data in th
 
 `00-setup.R` should be run first. It:
 - loads the requisite libraries
-- defines a function `with_epoch()`
-    - labels data with "Pre" and "Post" in a new `epoch` column
+- defines a function `with_epoch()` that:
+    - creates a new `epoch` column with values "Pre", "Post", or `NA` 
     - handles the assumption that **most large effects would not plausibly be instantaneous**
         - they might play out over several days or even weeks 
         - thus, here we provide for "Pre" and "Post" to be separated by a "transition" interval
+        - if `na.rm = FALSE`, then within the transition interval, epoch is set to `NA`
     - accepts your definition of `transition_start` and `transition_end`
-
+   
 `01-harvest-1h.R` pulls hourly data 
 - *for the entire state of California*
 - from [AirNowTech.org](http://airnowtech.org)
