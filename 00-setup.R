@@ -37,3 +37,8 @@ future::plan(
 #' be "Transition" (i.e., `NA`).
 #' 
 source(here::here("code", "with_epoch.R"))
+
+#'
+#' Source other useful functions.
+#'
+source(here::here("code", "format_decimal.R"))
