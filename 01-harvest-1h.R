@@ -164,7 +164,7 @@ get_1h_SFBA_data <- function (
 #' What timespan are we interested in?
 #' 
 dttm_tz <- "Etc/GMT+8" 
-dttm_start <- ISOdate(2020, 05, 01, hour = 00, tz = dttm_tz)
+dttm_start <- ISOdate(2020, 01, 01, hour = 00, tz = dttm_tz)
 dttm_end <- ISOdate(2020, 05, 12, hour = 23, tz = dttm_tz)
 dttm_set <- seq(from = dttm_end, to = dttm_start, by = dhours(-1))
 
