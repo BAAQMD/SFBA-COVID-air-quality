@@ -8,18 +8,33 @@ chart_vars <-
     names(SFBA_1h_data),
     PM25)
 
+#'
+#' This chart begins at January 1, 2020.
+#' 
 chart_data <-
   SFBA_1h_data %>%
   tidy_1h_data(
     value_vars = chart_vars,
     na.rm = TRUE) %>%
   with_epoch(
-    na.rm = TRUE)
+    na.rm = TRUE) %>%
+  filter(
+    dttm >= ISOdate(2020, 01, 01, hour = 00, tz = dttm_tz))
 
+#'
+#' We'll use ths in `coord_cartesian(ylim = .)` later on, instead
+#' of `scale_y_continous(limits = ., ...)`. That will ensure that,
+#' even though we are clipping the viewport, we aren't dropping the
+#' data --- so things like `geom_smooth()` will be using the full
+#' `chart_data` as the basis for smoothing.
+#'
 chart_y_limits <- c(
   5 * floor(min(0, with(chart_data, min(value, na.rm = TRUE))) / 5),
   35)
 
+#'
+#' TODO: improve chart title and subtitle.
+#'
 chart_description <- 
   ggplot2::labs(
     title = "Bay Area Monitoring Data (PM2.5, Hourly)",
@@ -30,11 +45,20 @@ chart_description <-
       .sep = "\n"),
     caption = glue("DRAFT {format(Sys.Date(), '%Y-%m-%d')}"))
 
+#'
+#' Let's show `dttm_tz` (the timezone) on the x-axis.
+#'
+chart_x_axis_title <-
+  stringr::str_remove(
+    lubridate::tz(pull(chart_data, dttm)),
+    fixed("Etc/"))
+
+#'
+#' TODO: show vertical lines on Sundays instead of Mondays?
+#'
 chart_x_scale <-
   scale_x_datetime(
-    name = str_remove(
-      lubridate::tz(pull(chart_data, dttm)),
-      fixed("Etc/")),
+    name = chart_x_axis_title,
     expand = expansion(0, 0),
     date_labels = "%d\n%b",
     date_breaks = "2 weeks",
@@ -79,7 +103,7 @@ chart_object <-
     show.legend = FALSE,
     size = I(0.3),
     alpha = I(0.2)) +
-  scale_color_excel_new() +
+  ggthemes::scale_color_excel_new() +
   chart_faceting +
   chart_x_scale +
   chart_y_scale +
