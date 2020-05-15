@@ -28,13 +28,13 @@ Skeleton for analysis of air quality data in the San Francisco Bay Area (SFBA), 
     - "Pre" and "Post" are separated by a "transition" interval --- most plausible effects would not be instantaneous
 
 `01-harvest-1h.R` pulls hourly data 
-- *for the entire United States* 
+- *for the entire state of California*
 - from [AirNowTech.org](http://airnowtech.org)
 - using the [`cacher`](https://github.com/BAAQMD/cacher) package
     - to cache the results locally
     - backed by the high-performance [`.fst`](http://www.fstpackage.org) format for tabular data
 
-The approximate size of `./cache/` will be **~400 Mb for 1h data from Jan 01 through May 13, 2000**.
+The approximate size of `./cache/` will be **~50 Mb for 1h California data from Jan 01 through May 13, 2020**.
 
 ## Exploratory Work
 
