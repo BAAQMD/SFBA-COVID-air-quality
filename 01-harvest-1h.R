@@ -20,6 +20,7 @@ airnowtech_url_for_1h_data <- function (dttm) {
 airnowtech_1h_col_spec <- 
   readr::cols_only(
     AQSID = col_character(),
+    StateName = col_character(),
     SiteName = col_character(),
     Status = col_factor(),
     GMTOffset = col_double(),
@@ -41,7 +42,6 @@ airnowtech_1h_col_spec <-
 #' 
 get_1h_data__ <- function (
   dttm, 
-  state = "CA",
   url_tz = "UTC", 
   col_types = airnowtech_1h_col_spec
 ) {
@@ -80,13 +80,34 @@ get_1h_data__ <- function (
 #' - filesystem-backed, using the .fst format (very efficient for tabular data)
 #' - allows for filtering, using `...`
 #'
-get_1h_data <- function (dttm, ...) {
+get_1h_data <- function (
+  dttm, 
+  state,
+  ...
+) {
+  
   require(cacher)
-  root <- here::here("cache", "1h")
-  path <- format(dttm, "%Y%m%d")
-  key <- format(dttm, "%Y%m%d-%H00h")
-  result <- cached(path, key, ext = ".fst", root = root) %or% get_1h_data__(dttm, ...)
-  return(result)
+  
+  stopifnot(
+    length(state) == 1, 
+    state %in% state.abb)
+  
+  cache_root <- 
+    here::here("cache")
+  
+  state_1h_data <- 
+    cacher::cached(
+      state,
+      format(dttm, "%Y%m%d"),
+      format(dttm, str_c(state, "-%Y%m%d-%H00h")), 
+      ext = ".fst", 
+      root = cache_root) %or% {
+        filter(
+          get_1h_data__(dttm, ...),
+          StateName == state)
+      }
+  
+  return(state_1h_data)
 }
 
 #'
@@ -100,7 +121,12 @@ SFBA_site_set <- local({
     `Santa Clara` = "085", Solano = "095", Sonoma = "097")
   
   sample_data <-
-    get_1h_data__(Sys.time() - ddays(1)) 
+    get_1h_data(
+      dttm = Sys.time() - ddays(1),
+      state = "CA")
+  
+  site_blacklist <- c(
+    "Vacaville") # in Solano County, but not BAAQMD jurisdiction
   
   SFBA_site_set <-
     sample_data %>%
@@ -127,8 +153,8 @@ get_1h_SFBA_data <- function (
   
   filtered_data <-
     filter(
-      get_1h_data(dttm),
-      AQSID %in% valid_SFBA_site_set)
+      get_1h_data(dttm, state = "CA"),
+      AQSID %in% SFBA_site_set)
   
   return(filtered_data)
   
@@ -138,7 +164,7 @@ get_1h_SFBA_data <- function (
 #' What timespan are we interested in?
 #' 
 dttm_tz <- "Etc/GMT+8" 
-dttm_start <- ISOdate(2020, 01, 01, hour = 00, tz = dttm_tz)
+dttm_start <- ISOdate(2020, 05, 01, hour = 00, tz = dttm_tz)
 dttm_end <- ISOdate(2020, 05, 12, hour = 23, tz = dttm_tz)
 dttm_set <- seq(from = dttm_end, to = dttm_start, by = dhours(-1))
 
@@ -184,11 +210,11 @@ SFBA_1h_blacklist <-
   tibble::tribble(
     ~ SiteName, ~ dttm_from, ~ dttm_to,
     "Rio Vista",
-      dttm_start, 
-      dttm_end,
+    dttm_start, 
+    dttm_end,
     "Vacaville",
-      ISOdate(2020, 02, 26, hour = 0, tz = dttm_tz), 
-      ISOdate(2020, 03, 15, hour = 23, tz = dttm_tz))
+    ISOdate(2020, 02, 26, hour = 0, tz = dttm_tz), 
+    ISOdate(2020, 03, 15, hour = 23, tz = dttm_tz))
 
 tictoc::tic() # start timing
 
