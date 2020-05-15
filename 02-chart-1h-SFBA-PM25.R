@@ -49,7 +49,7 @@ chart_data <-
   with_epoch(
     na.rm = TRUE)
 
-y_axis_limits <- c(
+chart_y_limits <- c(
   5 * floor(min(0, with(chart_data, min(value, na.rm = TRUE))) / 5),
   35)
 
@@ -59,7 +59,7 @@ chart_description <-
     subtitle = glue(
       "Source: AirNowTech.",
       "Points jittered to reduce overplotting.",
-      "Y-axis clipped at {max(y_axis_limits)}, but no data are dropped when calculating group means.",
+      "Y-axis clipped at {max(chart_y_limits)}, but no data are dropped when calculating group means.",
       .sep = "\n"),
     caption = glue("DRAFT {format(Sys.Date(), '%Y-%m-%d')}"))
 
@@ -127,7 +127,7 @@ chart_object <-
     show.legend = FALSE,
     formula = y ~ x + 0) +
   coord_cartesian(
-    ylim = y_axis_limits,
+    ylim = chart_y_limits,
     clip = FALSE) # don't actually drop any data, as `limits` would do
 
 show(chart_object)
