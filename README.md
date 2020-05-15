@@ -1,6 +1,6 @@
 # README
 
-This repository is a skeleton for analysis of air quality data in the San Francisco Bay Area (SFBA), pre- and post- "COVID-19". Please read the sections below before running the code. If you have questions, please contact David Holstius <dholstius@baaqmd.gov>. Thank you!
+This repository is a skeleton for exploratory analyses of air quality data in the San Francisco Bay Area (SFBA), pre- _vs._ post- "COVID-19". Please read the sections below before running the code. If you have questions, please contact David Holstius <dholstius@baaqmd.gov>. Thank you!
 
 ## TODO
 
