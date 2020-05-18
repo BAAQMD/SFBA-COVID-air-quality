@@ -26,6 +26,8 @@ SFBA_1h_blacklist <-
     ISOdate(2020, 02, 26, hour = 0, tz = dttm_tz), 
     ISOdate(2020, 03, 15, hour = 23, tz = dttm_tz))
 
+show(SFBA_1h_blacklist)
+
 #'
 #' Do the heavy lifting:
 #' 
