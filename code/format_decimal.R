@@ -1,7 +1,18 @@
-format_decimal <- function (x, digits) {
-  formatC(
-    round(x, digits = digits), 
-    digits = digits, 
-    format = "f", 
-    flag = "#", drop0trailing = FALSE)
+format_decimal <- function (x, digits, ...) {
+  
+  formatted <- 
+    formatC(
+      x,
+      digits = digits, 
+      ...,
+      format = "g", 
+      flag = "#", drop0trailing = FALSE)
+  
+  trimmed <- 
+    stringr::str_remove(
+      formatted,
+      "\\.$")
+  
+  return(trimmed)
+  
 }
