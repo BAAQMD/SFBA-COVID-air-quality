@@ -1,7 +1,7 @@
 #'
 #' Sites in the Bay Area.
 #'
-SFBA_site_set <- local({
+SFBA_1h_site_set <- local({
   
   SFBA_COUNTY_FIPS_CODES <- c(
     Alameda = "001", `Contra Costa` = "013", Marin = "041", 
