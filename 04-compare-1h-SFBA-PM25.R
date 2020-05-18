@@ -202,6 +202,6 @@ show(SFBA_1h_PM25_ecdf_chart)
 
 ggplot2::ggsave(
   here::here("figures", "SFBA-PM25-1h-ecdf-chart.pdf"),
-  SFBA_1h_PM25_ecdf_chart_v2,
+  SFBA_1h_PM25_ecdf_chart,
   width = 8.5,
   height = 11)
