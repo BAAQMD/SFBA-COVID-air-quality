@@ -1,6 +1,13 @@
 # README
 
-This repository is a skeleton for exploratory analyses of air quality data in the San Francisco Bay Area (SFBA), pre- _vs._ post- "COVID-19". Please read the sections below before running the code. If you have questions, please contact <a href="mailto:dholstius@baaqmd.gov">David Holstius</a>. Thank you!
+This repository is a skeleton for exploratory analyses of air quality data in the San Francisco Bay Area (SFBA), pre- _vs._ post- "COVID-19". Please read the entirety of this README before running the code. If you have questions, please contact <a href="mailto:dholstius@baaqmd.gov">David Holstius</a>. Thank you!
+
+Have a look at these figures:
+
+- [PM2.5 time-series](https://github.com/BAAQMD/SFBA-COVID-air-quality/blob/master/figures/SFBA-PM25-1h-stripchart.pdf) (pre/post, by site, of 1-hour data, with group means)
+- [PM2.5 distributions](https://github.com/BAAQMD/SFBA-COVID-air-quality/blob/master/figures/SFBA-PM25-1h-ecdf-chart.pdf) (pre/post, by site, of 1-hour data, with two-sample statistics)
+
+In the latter, the statistics have been included by request but not properly vetted, so please, don't stargaze or assume "significance" means what one thinks it means!
 
 ## TODO
 
