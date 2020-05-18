@@ -31,25 +31,32 @@ This repository is a skeleton for exploratory analyses of air quality data in th
         - if `na.rm = FALSE`, then within the transition interval, epoch is set to `NA`
     - accepts your definition of `transition_start` and `transition_end`
    
-`01-harvest-1h.R` pulls hourly data 
+`01-harvest-1h-CA.R` pulls hourly data 
 - *for the entire state of California*
 - from [AirNowTech.org](http://airnowtech.org)
 - using the [`BAAQMD/cacher`](https://github.com/BAAQMD/cacher) package
     - to cache the results locally
     - backed by the high-performance [`.fst`](http://www.fstpackage.org) format for tabular data
 
-After running `01-harvest-1h.R`, the approximate size of `./cache/` will be **~50 Mb for 1h California data from Jan 01 through May 13, 2020**.
+After running `01-harvest-1h-CA.R`, the approximate size of `./cache/` will be **~50 Mb for 1h California data from Jan 01 through May 13, 2020**.
 
 ## Exploratory Work
 
-`02-chart-1h-PM25.R` generates a quick stripchart of PM2.5, faceted by site. This chart:
+`02-chart-1h-SFBA-PM25.R` generates a quick time-series chart of Bay Area PM2.5. This chart:
+- is faceted by site
+- shows means for both "Pre" and "Post"
 - shows most of the data
     - Y-axis is (visually) clipped at -5 and 35 µg/m^3
     - no datapoints are actually dropped, so the (displayed) group means are accurate
-- shows means for both "Pre" and "Post"
 
-`03-model-1h-PM25.R` is a rough start. These models have been fit:
+`03-model-1h-SFBA-PM25.R` is a rough start. These models have been fit:
 - simple linear model with fixed effect by `AQSID` (i.e., montoring site ID)
 - simple mixed-effects model using `lme4`
+
+`04-compare-1h-SFBA-PM25.R` compares pre/post distributions, ignoring autocorrelation. It shows:
+- is faceted by site
+- shows empirical cumulative distribution functions (ECDFs) for both "Pre" and "Post"
+- shows _D-_ and _t-_ statistics (two-sided, unequal variance) with stars
+- NOTE: the stars are likely _overconfident_ measures of "significance"
 
 See **TODO** (above) for some ideas for next steps.
