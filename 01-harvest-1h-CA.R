@@ -1,6 +1,3 @@
-source(here::here("code", "airnowtech_url_for_1h_data.R"))
-source(here::here("code", "get_1h_data.R"))
-source(here::here("code", "SFBA_1h_site_set.R")) # depends on `get_1h_data.R`
 source(here::here("code", "get_1h_SFBA_data.R"))
 source(here::here("code", "parse_date_time.R"))
 source(here::here("code", "exclude_1h_data.R"))
@@ -71,3 +68,4 @@ SFBA_1h_data <- local({
 SFBA_1h_data %>% glimpse()
 SFBA_1h_data %>% object.size() %>% format(units = "Mb")
 SFBA_1h_data %>% summary()
+SFBA_1h_data %>% group_by(SiteName) %>% summarise_at(vars(PM25, NO2, CO), list(n = length))

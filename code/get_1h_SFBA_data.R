@@ -1,3 +1,6 @@
+source(here::here("code", "get_1h_data.R"))
+source(here::here("code", "SFBA_1h_site_set.R")) # depends on `get_1h_data.R`
+
 #' 
 #' Scoped variant:
 #' 
@@ -5,7 +8,7 @@
 #' 
 get_1h_SFBA_data <- function (
   dttm, 
-  site_ids = SFBA_site_set,
+  site_ids = SFBA_1h_site_set,
   ...
 ) {
   
