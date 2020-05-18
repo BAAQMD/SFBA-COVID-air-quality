@@ -28,11 +28,11 @@ In the latter, the statistics have been included by request but not properly vet
     
 ## Setup and Definitions
 
-`00-setup.R` should be run first. It loads the requisite libraries.
+`00-setup.R` should be run first. Within this file:
 
-`ddtm_tz`, `dttm_start`, and `dttm_end` define the "transition" interval --- between "pre" and "post". This is used by [`with_epoch()`](https://github.com/BAAQMD/SFBA-COVID-air-quality/blob/master/code/with_epoch.R) to create a new `epoch` column with values "Pre", "Post", or `NA`. It is set up to handle the assumption that **most large effects would not plausibly be instantaneous**; they might play out over several days or even weeks. 
+- `ddtm_tz`, `dttm_start`, and `dttm_end` define the "transition" interval --- between "pre" and "post". This is used by [`with_epoch()`](https://github.com/BAAQMD/SFBA-COVID-air-quality/blob/master/code/with_epoch.R) to create a new `epoch` column with values "Pre", "Post", or `NA`. It is set up to handle the assumption that **most large effects would not plausibly be instantaneous**; they might play out over several days or even weeks. 
 
-`SFBA_1h_blacklist` defines combinations of sites and times that should be omitted from further analyses. These were manually identified during early explorations and are not guaranteed to be complete or correct!
+- `SFBA_1h_blacklist` defines combinations of sites and times that should be omitted from further analyses. These were manually identified during early explorations and are not guaranteed to be complete or correct!
 
 ## Harvested Data
 
