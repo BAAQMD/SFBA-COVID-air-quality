@@ -2,6 +2,7 @@ library(tidyverse)
 library(lubridate)
 library(furrr)
 library(cacher) # devtools::install_github("BAAQMD/cacher)
+require(broom)
 
 #'
 #' These don't need to be attached; we'll just use `pkg::foo` instead.
