@@ -15,3 +15,9 @@ chart_theme <-
 
 chart_color_scale <-
   ggthemes::scale_color_excel_new()
+
+chart_faceting <-
+  lemon::facet_rep_wrap(
+    ~ SiteName, 
+    repeat.tick.labels = "y",
+    ncol = 3)

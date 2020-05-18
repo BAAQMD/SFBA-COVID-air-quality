@@ -49,12 +49,6 @@ make_1h_stripchart <- function (
       name = NULL,
       expand = expansion(mult = 0, add = 0))
   
-  chart_faceting <-
-    lemon::facet_rep_wrap(
-      ~ SiteName, 
-      repeat.tick.labels = "y",
-      ncol = 3)
-  
   chart_object <-
     ggplot(chart_data) +
     aes(x = dttm, y = value, group = SiteName) +
