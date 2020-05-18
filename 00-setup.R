@@ -1,24 +1,22 @@
 library(tidyverse)
 library(lubridate)
-library(glue)
 library(furrr)
 library(cacher) # devtools::install_github("BAAQMD/cacher)
-library(lme4)
 
 #'
 #' These don't need to be attached; we'll just use `pkg::foo` instead.
 #' 
 imported_packages <- c(
+  "glue",
   "ggthemes",
   "httr",
   "lemon",
-  "tictoc",
+  "lme4",
   "here")
 
 for (pkg in imported_packages) {
   requireNamespace(pkg)
 }
-
 
 #'-----------------------------------------------------------------------------
 #' 
