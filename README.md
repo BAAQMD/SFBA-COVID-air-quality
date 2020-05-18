@@ -19,26 +19,17 @@ This repository is a skeleton for exploratory analyses of air quality data in th
     - between different pollutants measured at the same site
     - between sites (e.g. using [`spatstat`](https://cran.r-project.org/web/packages/spatstat/index.html))
     
-## Setup and Data
+## Setup and Definitions
 
-`00-setup.R` should be run first. It:
-- loads the requisite libraries
-- defines a function `with_epoch()` that:
-    - creates a new `epoch` column with values "Pre", "Post", or `NA` 
-    - handles the assumption that **most large effects would not plausibly be instantaneous**
-        - they might play out over several days or even weeks 
-        - thus, here we provide for "Pre" and "Post" to be separated by a "transition" interval
-        - if `na.rm = FALSE`, then within the transition interval, epoch is set to `NA`
-    - accepts your definition of `transition_start` and `transition_end`
-   
-`01-harvest-1h-CA.R` pulls hourly data 
-- *for the entire state of California*
-- from [AirNowTech.org](http://airnowtech.org)
-- using the [`BAAQMD/cacher`](https://github.com/BAAQMD/cacher) package
-    - to cache the results locally
-    - backed by the high-performance [`.fst`](http://www.fstpackage.org) format for tabular data
+`00-setup.R` should be run first. It loads the requisite libraries.
 
-After running `01-harvest-1h-CA.R`, the approximate size of `./cache/` will be **~50 Mb for 1h California data from Jan 01 through May 13, 2020**.
+`ddtm_tz`, `dttm_start`, and `dttm_end` define the "transition" interval --- between "pre" and "post". This is used by [`with_epoch()`](https://github.com/BAAQMD/SFBA-COVID-air-quality/blob/master/code/with_epoch.R) to create a new `epoch` column with values "Pre", "Post", or `NA`. It is set up to handle the assumption that **most large effects would not plausibly be instantaneous**; they might play out over several days or even weeks. 
+
+`SFBA_1h_blacklist` defines combinations of sites and times that should be omitted from further analyses. These were manually identified during early explorations and are not guaranteed to be complete or correct!
+
+## Harvested Data
+
+`01-harvest-1h-CA.R` pulls hourly data *for the entire state of California* from [AirNowTech.org](http://airnowtech.org). It does so using the [`BAAQMD/cacher`](https://github.com/BAAQMD/cacher) package to cache the results locally; backed by the high-performance [`.fst`](http://www.fstpackage.org) format for tabular data. After running `01-harvest-1h-CA.R`, the approximate size of `./cache/` will be **~50 Mb for 1h California data from Jan 01 through May 13, 2020**.
 
 ## Exploratory Work
 
